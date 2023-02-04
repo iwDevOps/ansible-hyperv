@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+  - name: Ensure IIS webserver is installed
+    win_shell:  |
+      "get-vm"
+    register: ps_out
+  
+  - debug:
+          var: ps_out.stdout_lines  

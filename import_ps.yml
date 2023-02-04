@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: HyperV List VMS
+    win_shell: Import-VMInitialReplication VM01 C:\Users\Administrator\Downloads\VMS\IWA-ROCKY8-HV-13037\Virtual_Machines
+    register: ps_out
+  
+  - debug: var=ps_out.stdout_lines

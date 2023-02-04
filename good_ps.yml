@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+  - name: HyperV List VMS
+    ansible.windows.win_powershell:
+      script: |
+              get-vm
+    register: ps_out
+  
+  - debug: var=ps_out

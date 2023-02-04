@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: HyperV List VMS
+    win_shell: get-vm
+    register: ps_out
+  
+  - debug: var=ps_out.stdout_lines

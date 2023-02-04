@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+  - name: HyperV create VM
+    win_shell: |
+            New-VM -Name WM3 -MemoryStartupBytes 2GB -BootDevice VHD 
+            -VHDPath \\S_NAS\NetShare\Ansible_hyperV\Rocky-8-Azure.latest.x86_64.vhd 
+            -Path C:\ProgramData\Microsoft\Windows\Hyper-V -Generation 2 -Switch WAN1
+    register: ps_out
+  
+  - debug: var=ps_out.stdout_lines
