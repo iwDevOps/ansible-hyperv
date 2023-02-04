@@ -2,7 +2,7 @@
 192.168.86.43
 
 [win:vars]
-ansible_user=administrator
-ansible_password=iwJust4Mira...
+ansible_user=windows_admin
+ansible_password=windows_password
 ansible_connection=winrm
 ansible_winrm_server_cert_validation=ignore
