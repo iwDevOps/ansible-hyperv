@@ -1,5 +1,5 @@
 [win]
-192.168.86.43
+hyperv_host 192.168.86.43
 
 [win:vars]
 ansible_user=windows_admin
