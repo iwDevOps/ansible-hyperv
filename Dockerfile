@@ -15,6 +15,8 @@ RUN apt-get update && \
     apt install openssh-server openssh-client -y && \
     apt install vim -y && \
     apt install fish -y && \
+    apt install less -y && \
+    apt-get install -y iputils-ping -y && \    
     apt install sshpass -y
 
 # Run any additional commands you want to include in the container
