@@ -19,6 +19,9 @@ RUN apt-get update && \
     apt-get install -y iputils-ping -y && \    
     apt install sshpass -y
 
+# ADD configs /root
+ADD configs /root    
+
 # Run any additional commands you want to include in the container
 RUN echo "Ubuntu container with Ansible and PyWinRM ready!"
 
