@@ -16,7 +16,9 @@ RUN apt-get update && \
     apt install vim -y && \
     apt install fish -y && \
     apt install less -y && \
-    apt-get install -y iputils-ping -y && \    
+    apt-get install -y iputils-ping -y && \
+    apt-get install -y git -y && \
+    apt-get install -y curl -y && \        
     apt install sshpass -y
 
 # ADD configs /root
