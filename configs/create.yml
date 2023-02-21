@@ -1,0 +1,42 @@
+---
+- hosts: all
+  tasks:
+  - name: HyperV create VM
+    win_shell: |
+            $VMName = "LinuxVM11"
+            $RAM = 2GB
+            $NumCores = 2
+            $NumCPU = 4
+            $DiskSize = 100GB
+            $ISO = "C:\Users\Administrator\Desktop\Rocky-8.7-x86_64-minimal.iso"
+
+            # Create the virtual machine
+            New-VM -Name $VMName -Generation 2 -MemoryStartupBytes $RAM -Path "C:\Hyper-V\Virtual Machines" -Switch WAN1
+
+            # Add the virtual CPU
+            Set-VMProcessor -VMName $VMName -Count $NumCPU
+
+            # Add the virtual RAM
+            Set-VMMemory -VMName $VMName -StartupBytes $RAM
+
+            # Disable Secure Boot
+            Set-VMFirmware -VMName $VMName -EnableSecureBoot Off
+
+            # Create and attach the virtual disk
+            New-VHD -Path "C:\Hyper-V\Virtual Machines\$VMName\$VMName.vhdx" -SizeBytes $DiskSize -Dynamic
+            Add-VMScsiController -VMName $VMName
+            Add-VMHardDiskDrive -VMName $VMName -Path "C:\Hyper-V\Virtual Machines\$VMName\$VMName.vhdx" -ControllerNumber 0 -ControllerLocation 0
+
+            # Add and mount the ISO file
+            Add-VMDvdDrive -VMName $VMName -Path $ISO
+            Set-VMDvdDrive -VMName $VMName -ControllerNumber 0 -ControllerLocation 1
+
+            # Set the boot order to boot from DVD first
+            Set-VMFirmware -VMName $VMName -FirstBootDevice (Get-VMDvdDrive -VMName $VMName)
+
+            # Start the virtual machine
+            Start-VM -Name $VMName
+
+    register: ps_out
+
+  - debug: var=ps_out.stdout_lines
