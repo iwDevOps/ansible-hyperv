@@ -1,0 +1,17 @@
+UI menu.c32
+MENU TITLE IWDevOps Infra Division PXE Menu
+label Install Rocky Linux 8 Node
+  kernel networkboot/Rocky8/vmlinuz
+  append initrd=networkboot/Rocky8/initrd.img inst.repo=ftp://192.168.86.36/pub/pxe/Rocky8/AppStream/ inst.ks=ftp://192.168.86.36/pub/pxe/r8.cfg
+
+label Install Rocky Linux 8.5 Minimal
+kernel networkboot/Rocky8.5Minimal/vmlinuz
+append initrd=networkboot/Rocky8.5Minimal/initrd.img inst.repo=http://192.168.86.36/pxe/RockyMinimal inst.ks=http://192.168.86.36/r8.cfg
+
+LABEL CentOS 7_x64
+KERNEL networkboot/Centos7/vmlinuz
+APPEND networkboot/Centos7/initrd.img inst.repo=http://192.168.86.36/pxe/Centos7
+
+LABEL Rocky9.1
+KERNEL networkboot/Rocky9.1/vmlinuz
+APPEND initrd=networkboot/Rocky9.1/initrd.img inst.repo=ftp://192.168.86.36/pub/pxe/Rocky9.1
