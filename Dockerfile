@@ -19,6 +19,7 @@ RUN apt-get update && \
     apt-get install -y iputils-ping -y && \
     apt-get install -y git -y && \
     apt-get install -y curl -y && \        
+    apt-get install -y iproute2 -y && \            
     apt install sshpass -y
 
 # ADD configs /root
