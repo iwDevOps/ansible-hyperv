@@ -11,4 +11,17 @@ Install-WindowsFeature -Name Hyper-V -IncludeManagementTools -Restart
 ```powershell
 ansible -i hosts all -m win_ping
 ```
+# ansible-hyperv
+
+## Prepare the HyperV machaine. Run the ansible_winrm.ps1 on the HyperV host
+
+## Clone this repo
+
+## Build the image from the Dockerfile
+
+## Create a container from the image
+
+## Edit to the hosts file to suite your environment
+
+## Test with ansible -i hosts all -m win_ping
 
