@@ -3,15 +3,19 @@
   tasks:
   - name: HyperV create VM
     win_shell: |
-            $VMName = "LinuxVM11"
+            $VMName = "{{ vm_name }}"
             $RAM = 2GB
             $NumCores = 2
             $NumCPU = 4
             $DiskSize = 100GB
             $ISO = "C:\Users\Administrator\Desktop\Rocky-8.7-x86_64-minimal.iso"
+            $MACAddress = "00155D562B10"
 
             # Create the virtual machine
             New-VM -Name $VMName -Generation 2 -MemoryStartupBytes $RAM -Path "C:\Hyper-V\Virtual Machines" -Switch WAN1
+            
+            # Add a network adapter with a static MAC address
+            Set-VMNetworkAdapter -VMName $VMName -StaticMacAddress $MACAddress
 
             # Add the virtual CPU
             Set-VMProcessor -VMName $VMName -Count $NumCPU
