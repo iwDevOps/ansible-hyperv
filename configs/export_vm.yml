@@ -1,0 +1,42 @@
+---
+- name: Export Hyper-V VM
+  hosts: all
+  gather_facts: no
+
+  vars:
+    vm_name: VM02
+    export_path: C:\Hyper-V\ExportedVMs\{{ vm_name }}
+    new_disk_name: "IWA-ROCKY8-HV-{{ vm_name }}.vhdx"
+
+  tasks: 
+  - name: Stop the virtual machine
+    win_shell: Stop-VM -Name "{{ vm_name }}" -Force
+    register: stop_output
+    changed_when: stop_output.rc != 0
+
+  - name: Remove and unmout the ISO file
+    win_shell: Remove-VMDvdDrive -VMName "{{ vm_name }}" -ControllerNumber 0 -ControllerLocation 1
+    register: remove_iso_output
+    changed_when: remove_iso_output.rc != 0
+
+  - name: Export the virtual machine
+    win_shell: Export-VM -Name "{{ vm_name }}" -Path "{{ export_path }}" -Passthru
+    register: export_output
+    changed_when: export_output.rc != 0
+
+  # - name: Rename the exported disk
+  #   win_shell: Rename-Item -Path "{{ export_path }}\{{ vm_name }}.vhdx" -NewName "{{ new_disk_name }}"
+  #   register: rename_output
+  #   changed_when: rename_output.rc != 0
+
+  - name: Compress the exported files into a ZIP file
+    win_command: powershell.exe -Command "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::CreateFromDirectory('{{ export_path }}', '{{ zip_file }}')"
+    register: compress_output
+    changed_when: compress_output.rc != 0
+
+  # - name: Start the virtual machine
+  #   win_shell: Start-VM -Name "{{ vm_name }}"
+  #   register: start_output
+  #   changed_when: start_output.rc != 0
+
+  # - debug: var=ps_out.stdout_lines
